@@ -3,8 +3,8 @@
 # activate debugging from here
 set -x
 
-rg=DaveDrupalTEST1
-dnsname=davedrupaltest1
+rg=DaveDrupalTEST3
+dnsname=davedrupaltest3
 vmname=davedrupaltest
 
 region=westeurope
@@ -12,8 +12,6 @@ vnet=vnet
 subnet=subnet
 publicIPName=publicIP
 nsgname=nsg
-nsgsshrulename=nsgGroupRuleSSH
-nsgwebrulename=nsgGroupRuleWeb
 nicName=nic
 image=UbuntuLTS
 adminusername=azureuser
@@ -93,5 +91,3 @@ az vm create \
     --admin-username ${adminusername} \
     --admin-password ${adminpassword} \
     --custom-data cloud-init.txt 
-    # --generate-ssh-keys
-    # --availability-set ${availabilitySetName} \
