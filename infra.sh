@@ -5,6 +5,7 @@ set -x
 
 # to ease spinning up and down environments, increment this number each time
 int=6
+# ** remember to check the version of drupal is current in cloud-init.txt**
 
 rg=DaveDrupalTESTx${int}
 dnsname=davedrupaltestx${int}
