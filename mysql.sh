@@ -3,14 +3,14 @@
 # activate debugging from here
 set -x
 
-rg=DaveMysqlTEST3
+int=3
+rg=DaveMysqlTEST${int}
+mysqlserver=davetestx${int}
+dbname=davetest
+sqladmin=adminusernamex${int}
+sqlpassword=password123456789TKT${int}
+
 region=westeurope
-
-# db name must be unique 
-mysqlserver=davetestx
-sqladmin=adminusernamex
-sqlpassword=password123456789TKT
-
 echo "create resource group ${rg}"
 az group create \
    --name ${rg} \
@@ -34,6 +34,7 @@ az mysql server create \
 
 #configure firewalls
 echo "begin azure firewall"
+# Azure services
 az mysql server firewall-rule create \
     --name allAzureIPs \
     --server ${mysqlserver} \
@@ -41,4 +42,19 @@ az mysql server firewall-rule create \
     --start-ip-address 0.0.0.0 \
     --end-ip-address 0.0.0.0
 
+myip="$(dig +short myip.opendns.com @resolver1.opendns.com)"
+echo "My WAN/Public IP address: ${myip}"
+
+# allow current IP access to the db
+az mysql server firewall-rule create \
+    --name localIPToCreateDbCanRemove \
+    --server ${mysqlserver} \
+    --resource-group ${rg} \
+    --start-ip-address ${myip} \
+    --end-ip-address ${myip} 
 echo "end azure firewall"
+
+mysql -h ${mysqlserver}.mysql.database.azure.com -u ${sqladmin}@${mysqlserver} -p${sqlpassword} -e "create database ${dbname}"
+
+# db connection helpers
+echo -e "${dbname}\n${sqladmin}@${mysqlserver}\n${sqlpassword}\n${mysqlserver}.mysql.database.azure.com"

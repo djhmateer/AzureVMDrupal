@@ -3,8 +3,14 @@
 # activate debugging from here
 set -x
 
-rg=DaveDrupalTEST3
-dnsname=davedrupaltest3
+# to ease spinning up and down environments, increment this number each time
+int=6
+
+rg=DaveDrupalTESTx${int}
+dnsname=davedrupaltestx${int}
+adminusername=azureuserx${int}
+adminpassword=zp1234567890TESTx${int}
+
 vmname=davedrupaltest
 
 region=westeurope
@@ -14,9 +20,6 @@ publicIPName=publicIP
 nsgname=nsg
 nicName=nic
 image=UbuntuLTS
-adminusername=azureuser
-adminpassword=zp1234567890TEST
-
 ###
 # Create VNET #
 ###
@@ -32,9 +35,11 @@ az network vnet create \
     --subnet-name ${subnet} \
     --subnet-prefix 192.168.1.0/24
 
+# note the static IP address here
 az network public-ip create \
     --resource-group ${rg} \
     --name ${publicIPName} \
+    --allocation-method Static \
     --dns-name ${dnsname}
 
 az network nsg create \
@@ -71,7 +76,6 @@ az network nsg rule create \
     --destination-port-range 443 \
     --access allow
 
-
 #create a virtual nic
 az network nic create \
     --resource-group ${rg} \
@@ -81,7 +85,7 @@ az network nic create \
     --public-ip-address ${publicIPName} \
     --network-security-group ${nsgname}
 
-#create vm
+#create vm which runs the cloud init script to provision apache, php etc
 az vm create \
     --resource-group ${rg} \
     --name ${vmname} \
@@ -91,3 +95,5 @@ az vm create \
     --admin-username ${adminusername} \
     --admin-password ${adminpassword} \
     --custom-data cloud-init.txt 
+
+echo -e "\nssh ${adminusername}@${dnsname}.westeurope.cloudapp.azure.com\n${adminpassword}"
