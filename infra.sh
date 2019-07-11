@@ -95,7 +95,7 @@ az vm create \
     --nics ${nicName} \
     --image ${image} \
     --admin-username ${adminusername} \
-    --admin-password ${adminpassword} #\
-   # --custom-data cloud-init.txt 
+    --admin-password ${adminpassword} \
+    --custom-data cloud-init.txt 
 
 echo -e "\n${dnsname}.westeurope.cloudapp.azure.com\nssh ${adminusername}@${dnsname}.westeurope.cloudapp.azure.com\n${adminpassword}"
