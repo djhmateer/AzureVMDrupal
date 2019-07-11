@@ -5,12 +5,13 @@ set -x
 
 # generate a random suffix between 1 and 1000
 int=$(shuf -i 1-1000 -n 1)
+intpassword=$(shuf -i 1-1000 -n 1)
 # ** remember to check the version of drupal is current in cloud-init.txt**
 
 rg=DaveDrupalTESTx${int}
 dnsname=davedrupaltestx${int}
 adminusername=azureuserx${int}
-adminpassword=zp1234567890TESTx${int}
+adminpassword=zp1234567890TESTx${intpassword}
 
 vmname=davedrupaltest
 
@@ -94,7 +95,7 @@ az vm create \
     --nics ${nicName} \
     --image ${image} \
     --admin-username ${adminusername} \
-    --admin-password ${adminpassword} \
-    --custom-data cloud-init.txt 
+    --admin-password ${adminpassword} #\
+   # --custom-data cloud-init.txt 
 
 echo -e "\n${dnsname}.westeurope.cloudapp.azure.com\nssh ${adminusername}@${dnsname}.westeurope.cloudapp.azure.com\n${adminpassword}"
