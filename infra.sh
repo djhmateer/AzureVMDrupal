@@ -3,8 +3,8 @@
 # activate debugging from here
 set -x
 
-# to ease spinning up and down environments, increment this number each time
-int=6
+# generate a random suffix between 1 and 1000
+int=$(shuf -i 1-1000 -n 1)
 # ** remember to check the version of drupal is current in cloud-init.txt**
 
 rg=DaveDrupalTESTx${int}
@@ -97,4 +97,4 @@ az vm create \
     --admin-password ${adminpassword} \
     --custom-data cloud-init.txt 
 
-echo -e "\nssh ${adminusername}@${dnsname}.westeurope.cloudapp.azure.com\n${adminpassword}"
+echo -e "\n${dnsname}.westeurope.cloudapp.azure.com\nssh ${adminusername}@${dnsname}.westeurope.cloudapp.azure.com\n${adminpassword}"

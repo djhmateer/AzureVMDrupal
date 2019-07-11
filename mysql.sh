@@ -3,7 +3,10 @@
 # activate debugging from here
 set -x
 
-int=3
+#int=2
+# generate random suffix
+int=$(shuf -i 1-1000 -n 1)
+
 rg=DaveMysqlTEST${int}
 mysqlserver=davetestx${int}
 dbname=davetest
