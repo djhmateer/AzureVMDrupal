@@ -3,15 +3,17 @@
 # activate debugging from here
 set -x
 
-#int=2
 # generate random suffix
 int=$(shuf -i 1-1000 -n 1)
+# 14 character password
+password=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c14)
 
 rg=DaveMysqlTEST${int}
 mysqlserver=davetestx${int}
 dbname=davetest
-sqladmin=adminusernamex${int}
-sqlpassword=password123456789TKT${int}
+sqladmin=adminuser${int}
+sqlpassword=${password}
+
 
 region=westeurope
 echo "create resource group ${rg}"
@@ -19,7 +21,7 @@ az group create \
    --name ${rg} \
    --location ${region}
 
-# careful of cheap is B_Gen5_1, prod is GP_Gen5_2
+# careful: cheap is B_Gen5_1, prod is GP_Gen5_2
 echo "create mysql server"
 az mysql server create \
     --resource-group ${rg} \
@@ -32,8 +34,6 @@ az mysql server create \
     --version 5.7
     --storage-size 50000
 
-# --sku-name B_Gen5_1 \
-# --sku-name GP_Gen5_2 \
 
 #configure firewalls
 echo "begin azure firewall"

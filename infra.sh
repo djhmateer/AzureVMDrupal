@@ -5,13 +5,15 @@ set -x
 
 # generate a random suffix between 1 and 1000
 int=$(shuf -i 1-1000 -n 1)
-intpassword=$(shuf -i 1-1000 -n 1)
+# generate a 14 character password (normal, capitals and numbers)
+passowrd=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c14)
+
 # ** remember to check the version of drupal is current in cloud-init.txt**
 
-rg=DaveDrupalTESTx${int}
-dnsname=davedrupaltestx${int}
-adminusername=azureuserx${int}
-adminpassword=zp1234567890TESTx${intpassword}
+rg=DaveDrupalTEST${int}
+dnsname=davedrupaltest${int}
+adminusername=azureuser${int}
+adminpassword=${password}
 
 vmname=davedrupaltest
 
