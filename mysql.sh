@@ -10,7 +10,7 @@ password=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c14)
 
 rg=DaveMysqlTEST${int}
 mysqlserver=davetest${int}
-dbname=drupal
+dbname=davetest
 sqladmin=adminuser${int}
 sqlpassword=${password}
 
