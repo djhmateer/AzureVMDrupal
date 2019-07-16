@@ -9,8 +9,8 @@ int=$(shuf -i 1-1000 -n 1)
 password=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c14)
 
 rg=DaveMysqlTEST${int}
-mysqlserver=davetestx${int}
-dbname=davetest
+mysqlserver=davetest${int}
+dbname=drupal
 sqladmin=adminuser${int}
 sqlpassword=${password}
 
