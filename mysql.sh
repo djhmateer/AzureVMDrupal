@@ -6,7 +6,7 @@ set -x
 # generate random suffix
 int=$(shuf -i 1-1000 -n 1)
 # 14 character password
-password=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c14)
+password=!!ZZ6329$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c6)
 
 rg=DaveMysqlTEST${int}
 mysqlserver=davetest${int}
