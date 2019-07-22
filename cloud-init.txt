@@ -16,11 +16,18 @@ runcmd:
   - sudo systemctl restart apache2.service
   - cd /var/www/html
   - sudo rm *
+  # for drupal modules updates this needs to be applied
+  - sudo chown -R www-data:www-data /var/www/html
+  - cd ..
+  # to allow ease of updating, get the latest prod version of drupal so can can use it
+  - sudo mkdir drupal767
+  - cd drupal767
   - sudo git clone --branch 7.67 https://git.drupalcode.org/project/drupal.git .
   - cd sites/default
   - sudo cp default.settings.php settings.php
   - cd /var/www/html
   - sudo chmod -R 777 .
+  
 
   # need to get latest Apache from this repository 
   # https://geraldalinio.com/apache2/how-to-install-latest-apache-2-4-with-php-7-2-on-ubuntu-18-04-instance/
