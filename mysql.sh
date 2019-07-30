@@ -61,3 +61,5 @@ mysql -h ${mysqlserver}.mysql.database.azure.com -u ${sqladmin}@${mysqlserver} -
 
 # db connection helpers
 echo -e "${dbname}\n${sqladmin}@${mysqlserver}\n${sqlpassword}\n${mysqlserver}.mysql.database.azure.com"
+# save to file
+echo -e "${dbname}\n${sqladmin}@${mysqlserver}\n${sqlpassword}\n${mysqlserver}.mysql.database.azure.com" & > db.txt
